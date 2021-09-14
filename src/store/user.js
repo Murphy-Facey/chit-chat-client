@@ -82,10 +82,10 @@ export const user = {
           commit("setSearchInput", searchInput);
         });
     },
-    addNewContact({ commit }, { userId, contactId }) {
+    addNewContact(_, { userId, contactId }) {
       userService.addNewContact(userId, contactId).then((some) => {
         console.log(some);
-        commit("dummyMutation");
+        // commit("dummyMutation");
       });
     },
     fetchFriends({ commit }, userId) {

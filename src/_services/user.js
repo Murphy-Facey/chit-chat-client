@@ -1,4 +1,4 @@
-const REQ_URL = "http://localhost:8000";
+const REQ_URL = "https://chit-chat-messaging.herokuapp.com";
 // const REQ_URL = "https://ef6a-162-216-161-122.ngrok.io";
 
 function options(method, args) {

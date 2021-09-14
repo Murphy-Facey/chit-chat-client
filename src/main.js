@@ -9,7 +9,7 @@ import VueChatScroll from "vue-chat-scroll";
 
 import App from "./App.vue";
 
-const socketIO = io("http://localhost:8000")
+const socketIO = io("https://chit-chat-messaging.herokuapp.com/")
 // const socketIO = io("https://ef6a-162-216-161-122.ngrok.io")
 
 createApp(App)

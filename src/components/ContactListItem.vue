@@ -32,12 +32,12 @@ export default {
     ...mapActions("user", ["addNewContact", "fetchFriends"]),
     updateFriendList() {
       this.addNewContact({ userId: this.userId, contactId: this.user._id });
-      this.fetchFriends();
+      this.fetchFriends(this.userId);
     },
   },
   computed: {
     userId() {
-      return JSON.parse(localStorage.getItem("user")).user.id;
+      return JSON.parse(localStorage.getItem("user")).id;
     },
   },
 };

@@ -18,10 +18,10 @@
             </button>
             <button class="theme" @click="toggleTheme">
               <font-awesome-icon
-                :icon="isDarkTheme ? lightThemeIcon : darkThemeIcon"
+                :icon="getIsDarkTheme ? lightThemeIcon : darkThemeIcon"
                 class="icon"
               />
-              <span>{{ isDarkTheme ? "Light" : "Dark" }}</span>
+              <span>{{ this.getIsDarkTheme ? "Light" : "Dark" }}</span>
             </button>
           </div>
         </div>
@@ -111,6 +111,8 @@ import ContactModal from "./ContactModal.vue";
 import Message from "./Message.vue";
 import EmojiPicker from "./EmojiPicker.vue";
 
+import { toggleColorTheme } from "../helper/theme";
+
 export default {
   name: "Home",
   data() {
@@ -125,7 +127,6 @@ export default {
       message: "",
       friendName: "",
       isPickerActive: false,
-      isDarkTheme: true,
       currentUser: {}
     };
   },
@@ -169,6 +170,7 @@ export default {
       "getFriends",
       "getOtherUsers",
       "getPageNumber",
+      "getIsDarkTheme"
     ]),
     chat() {
       return this.getChat;
@@ -178,7 +180,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("user", ["addNewMessage", "setChat", "setLatestMessage"]),
+    ...mapMutations("user", ["addNewMessage", "setChat", "setLatestMessage", "changeColorTheme"]),
     ...mapActions("user", ["fetchOtherUsers", "fetchFriends", "fetchMessages", "logout"]),
     getFriendsBy() {
       if (this.friendName) {
@@ -199,11 +201,8 @@ export default {
         });
     },
     toggleTheme() {
-      this.isDarkTheme = !this.isDarkTheme;
-      document.body.setAttribute(
-        "data-theme",
-        this.isDarkTheme ? "dark" : "light"
-      );
+      this.changeColorTheme();
+      toggleColorTheme(this.getIsDarkTheme);
     },
     getUsers() {
       this.fetchOtherUsers({
@@ -281,11 +280,6 @@ export default {
       "online",
       this.currentUser.id
     );
-
-    const userPrefersDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    this.isDarkTheme = userPrefersDark;
   },
 };
 </script>

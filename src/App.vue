@@ -3,8 +3,18 @@
 </template>
 
 <script>
+import { isDarkThemeActive } from "./helper/theme";
+
+import { mapMutations } from "vuex";
+
 export default {
   name: 'App',
+  methods: {
+    ...mapMutations("user", ["setIsDarkTheme"])
+  },
+  mounted() {
+    this.setIsDarkTheme(isDarkThemeActive());
+  }
 }
 </script>
 

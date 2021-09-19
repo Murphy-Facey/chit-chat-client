@@ -4,6 +4,10 @@
       <div class="login_left_side">
         <h1>Welcome Back</h1>
         <p>Glad to see you back on our site</p>
+        <button class="theme_btn" @click="toggleTheme">
+          <font-awesome-icon :icon="this.isDarkTheme ? lightThemeIcon : darkThemeIcon" />
+          {{ this.isDarkTheme ? "Light" : "Dark"}}
+        </button>
       </div>
       <div class="login_right_side">
         <h2>Login</h2>
@@ -41,7 +45,12 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { toggleColorTheme } from "../helper/theme";
+
 import Alert from "./Alert.vue";
+
 
 export default {
   name: "Login",
@@ -49,13 +58,19 @@ export default {
     return {
       username: "",
       password: "",
+      lightThemeIcon: faSun,
+      darkThemeIcon: faMoon
     };
   },
   components: {
+    FontAwesomeIcon,
     Alert,
   },
   computed: {
     ...mapGetters("authentication", ["getErrors"]),
+    isDarkTheme() {
+      return this.$store.getters["user/getIsDarkTheme"];
+    }
   },
   methods: {
     ...mapMutations("authentication", ["loginFailure"]),
@@ -73,6 +88,10 @@ export default {
       if (this.getErrors) return this.getErrors.msg;
       return "No Error";
     },
+    toggleTheme() {
+      this.$store.commit("user/changeColorTheme");
+      toggleColorTheme(this.isDarkTheme);
+    }
   },
   mounted() {
     this.loginFailure(null);
@@ -104,12 +123,23 @@ export default {
       width: 50%;
       height: 100%;
 
+      position: relative;
+
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
       background: var(--secondary-clr);
+
+      .theme_btn {
+        padding: 5px 10px;
+        font-size: 15px;
+
+        position: absolute;
+        top: 15px;
+        left: 15px;
+      }
     }
 
     .login_right_side {

@@ -41,6 +41,10 @@
       <div class="register_right_side">
         <h1>Hello Newbie</h1>
         <p>Welcome to our chat site</p>
+        <button class="theme_btn" @click="toggleTheme">
+          <font-awesome-icon :icon="this.isDarkTheme ? lightThemeIcon : darkThemeIcon" />
+          {{ this.isDarkTheme ? "Light" : "Dark"}}
+        </button>
       </div>
     </div>
   </div>
@@ -53,12 +57,16 @@ import { passwordStrength } from "check-password-strength";
 
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { toggleColorTheme } from "../helper/theme";
+
 import Alert from "./Alert.vue";
 
 export default {
   name: "Register",
   components: {
-    // FontAwesomeIcon,
+    FontAwesomeIcon,
     Alert
   },
   data() {
@@ -68,11 +76,16 @@ export default {
       username: "",
       password: "",
       // infoIcon: faInfo,
-      passwordStrength: "too_weak"
+      passwordStrength: "too_weak",
+      lightThemeIcon: faSun,
+      darkThemeIcon: faMoon
     }
   },
   computed: {
     ...mapGetters("authentication", ["getErrors"]),
+    isDarkTheme() {
+      return this.$store.getters["user/getIsDarkTheme"];
+    }
   },
   methods: {
     ...mapMutations("authentication", ["loginFailure"]),
@@ -96,6 +109,10 @@ export default {
         return this.getErrors.msg;
       }
       return "No Error";
+    },
+    toggleTheme() {
+      this.$store.commit("user/changeColorTheme");
+      toggleColorTheme(this.isDarkTheme);
     }
   },
   mounted() {
@@ -366,12 +383,23 @@ export default {
       width: 50%;
       height: 100%;
 
+      position: relative;
+
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
       background: var(--secondary-clr);
+
+      .theme_btn {
+        padding: 5px 10px;
+        font-size: 15px;
+
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
     }
   }
 }

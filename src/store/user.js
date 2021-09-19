@@ -12,6 +12,7 @@ export const user = {
     usersCount: 0,
     searchInput: "",
     dummy: "",
+    isDarkTheme: null
   },
   getters: {
     getOtherUsers(state) {
@@ -35,6 +36,9 @@ export const user = {
     getSearchInput(state) {
       return state.searchInput;
     },
+    getIsDarkTheme(state) {
+      return state.isDarkTheme;
+    }
   },
   mutations: {
     setOtherUsers(state, otherUsers) {
@@ -67,6 +71,12 @@ export const user = {
     setSearchInput(state, searchInput) {
       state.searchInput = searchInput;
     },
+    setIsDarkTheme(state, theme) {
+      state.isDarkTheme = theme;
+    },
+    changeColorTheme(state) {
+      state.isDarkTheme = !state.isDarkTheme;
+    }
   },
   actions: {
     fetchOtherUsers({ commit, rootGetters }, { searchInput, pageNumber }) {

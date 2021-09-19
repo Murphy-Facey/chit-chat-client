@@ -1,4 +1,4 @@
-const REQ_URL = "https://chit-chat-messaging.herokuapp.com";
+const REQ_URL = "https://chit-chat-messaging.herokuapp.com/user";
 // const REQ_URL = "https://ef6a-162-216-161-122.ngrok.io";
 
 function options(method, args) {
@@ -11,7 +11,7 @@ function options(method, args) {
 
 function register(firstName, lastName, username, password) {
   return fetch(
-    `${REQ_URL}/user/register`,
+    `${REQ_URL}/register`,
     options("POST", { firstName, lastName, username, password })
   )
     .then(handleResponse)
@@ -21,7 +21,7 @@ function register(firstName, lastName, username, password) {
 }
 
 function login(username, password) {
-  return fetch(`${REQ_URL}/user/login`, options("POST", { username, password }))
+  return fetch(`${REQ_URL}/login`, options("POST", { username, password }))
     .then(handleResponse)
     .then((user) => {
 
@@ -48,7 +48,7 @@ function handleResponse(response) {
 }
 
 function getUsers(id, searchInput, pageNumber) {
-  return fetch(`${REQ_URL}/user/`, options("POST", { id, searchInput, pageNumber }))
+  return fetch(`${REQ_URL}/`, options("POST", { id, searchInput, pageNumber }))
     .then(handleResponse)
     .then((users) => {
       return users;
@@ -57,7 +57,7 @@ function getUsers(id, searchInput, pageNumber) {
 
 function addNewContact(userId, contactId) {
   return fetch(
-    `${REQ_URL}/user/contacts/new`,
+    `${REQ_URL}/contact/new`,
     options("POST", { user_id: userId, contact_id: contactId })
   )
     .then(handleResponse)
@@ -67,7 +67,7 @@ function addNewContact(userId, contactId) {
 }
 
 function fetchFriends(user_id) {
-  return fetch(`${REQ_URL}/user/contacts/all`, options("POST", { user_id }))
+  return fetch(`${REQ_URL}/contact/all`, options("POST", { user_id }))
     .then(handleResponse)
     .then((data) => {
       return data;
@@ -75,7 +75,7 @@ function fetchFriends(user_id) {
 }
 
 function createNewChat(userId, contactId) {
-  return fetch(`${REQ_URL}/user/chat/new`, options("POST", { userId, contactId }))
+  return fetch(`${REQ_URL}/chat/new`, options("POST", { userId, contactId }))
     .then(handleResponse)
     .then(data => {
       return data;
@@ -83,7 +83,7 @@ function createNewChat(userId, contactId) {
 }
 
 function fetchMessages(chatId) {
-  return fetch(`${REQ_URL}/user/message/all`, options("POST", { chatId }))
+  return fetch(`${REQ_URL}/message/all`, options("POST", { chatId }))
    .then(handleResponse)
    .then(data => {
      return data;

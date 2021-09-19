@@ -22,7 +22,7 @@
           <div class="password_info">
             <p>Password</p>
             <p class="tooltip">
-              <b>Accepted Password</b>: Password length must between 8 and 25 characters, and the strength must be above weak.
+              <b>Accepted Password</b>: Password length must between 8 and 25 characters, and the strength must be weak or above.
             </p>
             <!-- <font-awesome-icon :icon="infoIcon" class="info_icon" /> -->
           </div>
